@@ -28,7 +28,7 @@ def solve2(list4):
     str1 = str(a) + '+' + str(b)
     str2 = str(a) + '-' + str(b)
     str3 = str(a) + '*' + str(b)
-    str4 = str(a) + '/' + str(b
+    str4 = str(a) + '/' + str(b)
     res = str1
     if (score24(str2) >= score24(res)):
         res = str2
