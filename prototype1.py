@@ -25,10 +25,10 @@ def solve2(list4):
 # Mencari operasi 2 bilangan agar mencapai angka 24
     a = list4[0]
     b = list4[1]
-    str1 = a + '+' + b
-    str2 = a + '-' + b
-    str3 = a + '*' + b
-    str4 = a + '/' + b
+    str1 = str(a) + '+' + str(b)
+    str2 = str(a) + '-' + str(b)
+    str3 = str(a) + '*' + str(b)
+    str4 = str(a) + '/' + str(b
     res = str1
     if (score24(str2) >= score24(res)):
         res = str2
@@ -40,16 +40,16 @@ def solve2(list4):
 
 def solve3(c, sol):
 # Mencari operasi 3 angka atau 4 angka yang menghasilkan nilai skor maksimum
-    str1 = sol + '+' + c
-    str2 = sol + '-' + c
-    str3 = c + '-' + sol
-    str4 = sol + '*' + c
-    str5 = sol + '/' + c
-    str6 = c + '*' + sol
-    str7 = c + '/' + sol
-    str8 = '(' + sol + ')*' + c
-    str9 = '(' + sol + ')/' + c
-    str10 = c + '/(' + sol + ')'
+    str1 = sol + '+' + str(c)
+    str2 = sol + '-' + str(c)
+    str3 = str(c) + '-' + sol
+    str4 = sol + '*' + str(c)
+    str5 = sol + '/' + str(c)
+    str6 = str(c) + '*' + sol
+    str7 = str(c) + '/' + sol
+    str8 = '(' + sol + ')*' + str(c)
+    str9 = '(' + sol + ')/' + str(c)
+    str10 = str(c) + '/(' + sol + ')'
 
     res = str1
     if (score24(str2) >= score24(res)):
