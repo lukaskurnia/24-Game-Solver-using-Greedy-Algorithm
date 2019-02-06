@@ -129,6 +129,4 @@ def quickSort(numlist, first, last):
         quickSort(numlist, first, part - 1)
         quickSort(numlist, part + 1, last)
 
-
-
 main()
