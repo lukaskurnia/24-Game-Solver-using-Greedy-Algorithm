@@ -56,7 +56,6 @@ def changeOpr(expr, no, chg):
     newexpr = expr[:i] + chg + expr[(i + 1):]
     return newexpr
 
-
 # Tester main program
 
 def main():
