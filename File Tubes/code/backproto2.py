@@ -12,6 +12,8 @@ def algorithm24(list4):
         sol = changeOperator(sol)
         count+= 1
 
+    sol = bracketVariant(sol)
+
     return sol
 
 def changeOperator(expr):
@@ -41,6 +43,52 @@ def changeOperator(expr):
         sol = sol2
 
     return sol
+
+def bracketVariant(expr):
+    sol = expr
+    newsol = createBracket(expr, 0, 2)
+    if compare24(sol, newsol):
+        sol = newsol
+    newsol = createBracket(expr, 0, 3)
+    if compare24(sol, newsol):
+        sol = newsol
+    newsol = createBracket(expr, 1, 3)
+    if compare24(sol, newsol):
+        sol = newsol
+    newsol = createBracket(expr, 1, 4)
+    if compare24(sol, newsol):
+        sol = newsol
+    newsol = createBracket(expr, 2, 4)
+    if compare24(sol, newsol):
+        sol = newsol
+    newsol = createBracket(expr, 0, 2)
+    newsol = createBracket(newsol, 2, 4)
+    if compare24(sol, newsol):
+        sol = newsol
+    return sol
+
+def createBracket(expr, start, end):
+    count = 0
+    i = 0
+    while (count != start):
+        if expr[i] == '+' or expr[i] == '-' or expr[i] == '*' or expr[i] == '/':
+            count += 1
+            i += 1
+        else:
+            i += 1
+    expr = expr[:i] + '(' + expr[i:]
+    if end == 4:
+        expr = expr + ')'
+    else:
+        while(count != end):
+            if expr[i] == '+' or expr[i] == '-' or expr[i] == '*' or expr[i] == '/':
+                count += 1
+                i += 1
+            else:
+                i += 1
+        i -= 1
+        expr = expr[:i] + ')' + expr[i:]
+    return expr
 
 def changeOpr(expr, no, chg):
 # Mengganti operator yang ke berapa dengan operator lain
