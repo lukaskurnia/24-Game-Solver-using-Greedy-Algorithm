@@ -1,23 +1,29 @@
 def algorithm24(list4):
+#Fungsi utama yang mengembalikan ekspresi hasil algoritma greedy
     list4.sort(reverse= True)
+    #List angka diurut secara menurun dari maksimum ke minimum
     sol = str(list4[0]) + ' + ' + str(list4[1]) + ' + ' + str(list4[2]) + ' + ' + str(list4[3])
+    #default awal ekspresi adalah a+b+c+d
 
     if eval(sol) == 24:
         is24 = True
-    else:
+    else: #Jika tidak mencapai 24, urutan operator dimainkan
         is24 = False
         count = 0
         while (not is24 and count != 3):
+        #Pengulangan berhenti ketika mencapai 24 atau telah diulang 3x untuk tempat operator berbeda
             sol = changeOperator(sol)
             count+= 1
         if eval(sol) != 24:
+        #Mencoba mencari optimum dengan menambahkan tanda kurung
             sol = bracketVariant(sol)
 
-    return sol
+        return sol #Hasil yang diharapkan optimum global
 
 def changeOperator(expr):
     sol = expr
     if to24(sol) > 0:
+    #jika nilai ekspresi <24 maka ditambahkan atau dikali untuk mendekati 24 (mencari optimum)
         sol2 = sol
         for i in range(1, 4):
             newsol = changeOpr(sol, i, '+')
@@ -30,6 +36,7 @@ def changeOperator(expr):
         sol = sol2
 
     elif to24(sol) < 0:
+    #jika nilai ekspresi >24 maka ditambahkan atau dikali untuk mendekati 24 (mencari optimum)
         sol2 = sol
         for i in range(1, 4):
             newsol = changeOpr(sol, i, '-')
@@ -44,6 +51,13 @@ def changeOperator(expr):
     return sol
 
 def bracketVariant(expr):
+#Variasi kurung:
+# (a+b)+c+d
+# (a+b+c)+d
+# a+(b+c)+d
+# a+(b+c+d)
+# a+b+(c+d)
+# (a+b)+(c+d)
     sol = expr
     newsol = createBracket(expr, 0, 2)
     if compare24(sol, newsol):
@@ -103,19 +117,6 @@ def changeOpr(expr, no, chg):
     newexpr = expr[:i] + chg + expr[(i + 1):]
     return newexpr
 
-# Tester main program
-
-def main():
-    str = input('Masukkan keempat angka yang membentuk 24!\n')
-    numbers = str.split()
-    for i in range(len(numbers)):
-        numbers[i] = int(numbers[i])
-    result = algorithm24(numbers)
-    score = score24(result)
-    print('Result = ', result)
-    print('Score = ', score)
-
-
 # Fungsi-fungsi pembantu
 
 def to24(expr):
@@ -135,7 +136,6 @@ def compare24(expr1, expr2):
     else:
         return False
 
-
 def score24(expr):
 # Menghitung skor yang membentuk angka 24
     score = -1 * abs(24 - eval(expr))
@@ -151,26 +151,3 @@ def score24(expr):
         elif expr[i] == '(':
             score -= 1
     return score
-
-def quickSortHelper(numlist, first, last):
-# Mencari indeks yang benar buat quickSort
-# Membantu mengurutkan partisi yang ada
-    target = numlist[last]
-    z = first - 1
-
-    for i in range(first, last):
-        if numlist[i] > target:
-            z += 1
-            numlist[i], numlist[z] = numlist[z], numlist[i]
-
-    numlist[z + 1], numlist[last] = numlist[last], numlist[z + 1]
-    return (z + 1)
-
-def quickSort(numlist, first, last):
-# Mengurutkan list dari besar ke kecil dengan quicksort
-    if first < last:
-        # Mencari indeks partisi
-        part = quickSortHelper(numlist, first, last)
-        # Mengurutkan
-        quickSort(numlist, first, part - 1)
-        quickSort(numlist, part + 1, last)
