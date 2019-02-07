@@ -1,4 +1,4 @@
-import backproto2
+import backend
 import random
 
 from kivy.app import App
@@ -129,8 +129,8 @@ class setScreen(BoxLayout):
             mapNumbers(cards)
             print("Numbers:", end='')
             print(cards)
-            solution = backproto2.algorithm24(cards)
-            score = backproto2.score24(solution)
+            solution = backend.algorithm24(cards)
+            score = backend.score24(solution)
             self.ids.solution.text = solution
             self.ids.score.text = str(score)
 

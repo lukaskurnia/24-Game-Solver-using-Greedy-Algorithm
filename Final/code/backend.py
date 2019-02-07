@@ -1,18 +1,17 @@
 def algorithm24(list4):
-    quickSort(list4, 0, 3)
+    list4.sort(reverse= True)
     sol = str(list4[0]) + ' + ' + str(list4[1]) + ' + ' + str(list4[2]) + ' + ' + str(list4[3])
 
     if eval(sol) == 24:
         is24 = True
     else:
         is24 = False
-
-    count = 0
-    while (not is24 and count != 3):
-        sol = changeOperator(sol)
-        count+= 1
-
-    sol = bracketVariant(sol)
+        count = 0
+        while (not is24 and count != 3):
+            sol = changeOperator(sol)
+            count+= 1
+        if eval(sol) != 24:
+            sol = bracketVariant(sol)
 
     return sol
 

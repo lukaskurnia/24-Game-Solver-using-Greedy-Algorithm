@@ -1,4 +1,4 @@
-import backproto2
+import backend
 import sys
 
 # Activate : py front2proto1.py <input>.txt <output>.txt
@@ -14,7 +14,7 @@ if len(sys.argv) == 3:
     number[1] = float(number[1])
     number[3] = float(number[3])
     number[2] = float(number[2])
-    result = backproto2.algorithm24(number)
+    result = backend.algorithm24(number)
 
     scl = sys.argv[2]
     fcl = open(scl, 'w')
