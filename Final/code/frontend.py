@@ -3,6 +3,7 @@ import random
 
 from kivy.app import App
 from kivy.lang import Builder
+from kivy.core.window import Window
 
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.text import LabelBase
@@ -62,6 +63,8 @@ Builder.load_string('''
                 size_hint_y: .15
                 pos_hint: {'center_x': 0.4, 'center_y': 0.65}
                 id : tester
+                on_enter:
+
 
         Button:
             background_color: (0.0, 0.0, 0.0, 0.75)
@@ -109,8 +112,10 @@ Builder.load_string('''
                     bold: True
                     italic: True
                 Label:
+                    font_size: 25
                     id: cards
-                    text: "Cards remaining = 52"
+                    bold: True
+                    text: "Cards Remaining : 52"
             BoxLayout:
                 orientation: 'horizontal'
                 padding: 5
@@ -193,7 +198,8 @@ Builder.load_string('''
                     font_size: 35
                     bold: True
                 Label:
-                    font_size: 20
+                    font_size: 30
+                    bold: True
                     text: ""
                     id: solution
             BoxLayout:
@@ -205,7 +211,8 @@ Builder.load_string('''
                         font_size: 35
                         bold: True
                     Label:
-                        font_size: 20
+                        font_size: 30
+                        bold: True
                         text: ""
                         id: result
                 BoxLayout:
@@ -215,7 +222,8 @@ Builder.load_string('''
                         font_size: 35
                         bold: True
                     Label:
-                        font_size: 20
+                        font_size: 30
+                        bold: True
                         text: ""
                         id: score
 ''')
@@ -234,10 +242,9 @@ class Login(Screen):
     def login(self):
         name[0] = self.ids.tester.text
 
-
 class Play(Screen):
     def on_enter(self):
-        self.ids.title.text = "Hello, " + name[0]
+        self.ids.title.text = "Hello! " + name[0]
         print(self.ids.title.text)
 
     def draw(self):
@@ -255,7 +262,7 @@ class Play(Screen):
             randomizer()
             print("Cards:", end='')
             print(cards)
-            print("Remaining cards:", end='')
+            print("Remaining Cards:", end='')
             print(countDeck())
             # Gambarkan pada kartu
             picList = drawCards(cards)
@@ -265,7 +272,7 @@ class Play(Screen):
             self.ids.pic2.source = picList[1]
             self.ids.pic3.source = picList[2]
             self.ids.pic4.source = picList[3]
-            self.ids.cards.text = "Cards remaining = " + str(len(deck))
+            self.ids.cards.text = "Cards Remaining : " + str(len(deck))
             self.ids.solution.text = ""
             self.ids.score.text = ""
             self.ids.result.text = ""
@@ -381,4 +388,5 @@ class Main(App):
         return sm #Play()
 
 if __name__ == '__main__':
+    Window.fullscreen = 'auto'
     Main().run()
