@@ -119,11 +119,11 @@ Builder.load_string('''
                     Button:
                         text: "Draw"
                         bold: True
-                        on_press: root.draw()
+                        on_press: root.DaS()
                     Button:
                         text: "Solve"
                         bold: True
-                        on_press: root.solve()
+                        on_press: root.DaS()
                 BoxLayout:
                     orientation: 'vertical'
                     padding: 10
@@ -131,7 +131,7 @@ Builder.load_string('''
                     Button:
                         text: "Return to Deck"
                         bold: True
-                        on_press: root.return()
+                        on_press: root.DaS()
                     Button:
                         text: "Return All"
                         bold: True
@@ -230,7 +230,7 @@ class Play(Screen):
             self.ids.pic3.source = "../resource/red_back.png"
             self.ids.pic4.source = "../resource/yellow_back.png"
         else:
-            randomizer()
+            cards = randomizer()
             print("Cards:", end='')
             print(cards)
             print("Remaining cards:", end='')
