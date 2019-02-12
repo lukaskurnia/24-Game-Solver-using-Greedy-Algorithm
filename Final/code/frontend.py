@@ -119,11 +119,11 @@ Builder.load_string('''
                     Button:
                         text: "Draw"
                         bold: True
-                        on_press: root.DaS()
+                        on_press: root.draw()
                     Button:
                         text: "Solve"
                         bold: True
-                        on_press: root.DaS()
+                        on_press: root.solve()
                 BoxLayout:
                     orientation: 'vertical'
                     padding: 10
@@ -233,7 +233,7 @@ class Play(Screen):
             self.ids.pic3.source = "../resource/red_back.png"
             self.ids.pic4.source = "../resource/yellow_back.png"
         else:
-            cards = randomizer()
+            randomizer()
             print("Cards:", end='')
             print(cards)
             print("Remaining cards:", end='')
