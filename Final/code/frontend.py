@@ -112,20 +112,28 @@ Builder.load_string('''
                 orientation: 'horizontal'
                 padding: 5
                 spacing: 20
-                Image:
-                    source: "../resource/deck.png"
-                    width: 100
-                    allow_stretch: False
                 BoxLayout:
                     orientation: 'vertical'
                     padding: 10
                     spacing: 20
                     Button:
-                        text: "DRAW and SOLVE!"
+                        text: "Draw"
                         bold: True
-                        on_press: root.DaS()
+                        on_press: root.draw()
                     Button:
-                        text: "Return to deck"
+                        text: "Solve"
+                        bold: True
+                        on_press: root.solve()
+                BoxLayout:
+                    orientation: 'vertical'
+                    padding: 10
+                    spacing: 20
+                    Button:
+                        text: "Return to Deck"
+                        bold: True
+                        on_press: root.return()
+                    Button:
+                        text: "Return All"
                         bold: True
                         on_press: root.rebound()
                     Button:
@@ -136,6 +144,10 @@ Builder.load_string('''
             orientation: 'horizontal'
             padding: 20
             spacing: 30
+            Image:
+                source: "../resource/deck.png"
+                width: 100
+                allow_stretch: False
             Image:
                 source: "../resource/blue_back.png"
                 width: 100
@@ -190,10 +202,13 @@ Builder.load_string('''
 ''')
 
 # List deck kartu
-deck = [True] * 52
+deck = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51]
 
 # Nama pemain
 name = [""] * 2
+
+# Kartu yang ditampilkan
+cards = []
 
 #class Screen1(BoxLayout):
 class Login(Screen):
@@ -209,8 +224,13 @@ class Play(Screen):
         if countDeck() == 0:
             self.ids.solution.text = "Fail, no solution"
             self.ids.score.text = "Empty deck"
+            self.ids.result.text = "No result"
+            self.ids.pic1.source = "../resource/blue_back.png"
+            self.ids.pic2.source = "../resource/gray_back.png"
+            self.ids.pic3.source = "../resource/red_back.png"
+            self.ids.pic4.source = "../resource/yellow_back.png"
         else:
-            cards = randomizer()
+            randomizer()
             print("Cards:", end='')
             print(cards)
             print("Remaining cards:", end='')
@@ -229,6 +249,8 @@ class Play(Screen):
             print("Numbers:", end='')
             print(cards)
             solution = backend.algorithm24(cards)
+            print("Solution:", solution)
+            print()
             score = backend.score24(solution)
             self.ids.solution.text = solution
             self.ids.result.text = str(eval(solution))
@@ -236,33 +258,28 @@ class Play(Screen):
             self.ids.cards.text = "Cards remaining = " + str(len(deck))
 
     def rebound(self):
-        for i in range(len(deck)):
-            deck[i] = True
+        while (deck != []):
+            del deck[0]
+        for i in range(52):
+            deck.append(i)
         self.ids.pic1.source = "../resource/blue_back.png"
         self.ids.pic2.source = "../resource/gray_back.png"
         self.ids.pic3.source = "../resource/red_back.png"
         self.ids.pic4.source = "../resource/yellow_back.png"
+        self.ids.cards.text = "Cards remaining = " + str(len(deck))
         print("Remaining cards:", end='')
         print(countDeck())
 
 # DRAW and SOLVE
 def countDeck():
-    count = 0
-    for i in range(len(deck)):
-        if deck[i] == True:
-            count += 1
-    return count
+    return len(deck)
 
 def randomizer():
     cards = []
     for i in range(0, 4):
-        found = False
-        while not found:
-            x = random.randint(0, 51)
-            if (deck[x] == True):
-                deck[x] = False
-                found = True
-                cards.append(x)
+        x = random.randint(0, (len(deck)-1))
+        cards.append(deck[x])
+        del deck[x]
     return cards
 
 def mapNumbers(cards):

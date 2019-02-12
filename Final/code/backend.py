@@ -18,7 +18,7 @@ def algorithm24(list4):
         #Mencoba mencari optimum dengan menambahkan tanda kurung
             sol = bracketVariant(sol)
 
-        return sol #Hasil yang diharapkan optimum global
+    return sol #Hasil yang diharapkan optimum global
 
 def changeOperator(expr):
     sol = expr

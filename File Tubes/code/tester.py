@@ -13,7 +13,7 @@ sca = 0
 sca2 = 0
 hit = 0
 hit2 = 0
-for i in range(0, 100000):
+for i in range(0, 10000):
     list = randomizer()
     result = backproto1.algorithm24(list)
     result2 = backproto2.algorithm24(list)
