@@ -21,6 +21,7 @@ def algorithm24(list4):
     return sol #Hasil yang diharapkan optimum global
 
 def changeOperator(expr):
+#Melakukan update kepada string expr dengan mengganti operator
     sol = expr
     if to24(sol) > 0:
     #jika nilai ekspresi <24 maka ditambahkan atau dikali untuk mendekati 24 (mencari optimum)
@@ -81,6 +82,7 @@ def bracketVariant(expr):
     return sol
 
 def createBracket(expr, start, end):
+#fungsi untuk membentuk berbagai variasi kurung
     count = 0
     i = 0
     while (count != start):
