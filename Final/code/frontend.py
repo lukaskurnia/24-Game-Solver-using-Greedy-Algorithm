@@ -27,7 +27,7 @@ Builder.load_string('''
         padding : 30, 30
         canvas.before:
             Color:
-                rgba: hex('006400')
+                rgba: hex('003300')
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -44,7 +44,7 @@ Builder.load_string('''
             size_hint_x: .7
             canvas.before:
                 Color:
-                    rgba: hex('006400')
+                    rgba: hex('003300')
                 Rectangle:
                     size: self.size
                     pos: self.pos
@@ -62,7 +62,9 @@ Builder.load_string('''
                 size_hint_y: .15
                 pos_hint: {'center_x': 0.4, 'center_y': 0.65}
                 id : tester
+
         Button:
+            background_color: (0.0, 0.0, 0.0, 0.75)
             text: 'LOGIN'
             padding: 200, 200
             spacing: 10, 10
@@ -75,7 +77,8 @@ Builder.load_string('''
                 root.manager.current = 'Play'
                 root.login()
         Button:
-            text: 'Quit'
+            background_color: (0.0, 0.0, 0.0, 0.75)
+            text: 'QUIT'
             padding: 100, 100
             spacing: 10, 10
             size_hint_x: .2
@@ -89,7 +92,7 @@ Builder.load_string('''
         spacing: 10
         canvas.before:
             Color:
-                rgba: hex('006400')
+                rgba: hex('003300')
             Rectangle:
                 size: self.size
                 pos: self.pos
@@ -107,7 +110,7 @@ Builder.load_string('''
                     italic: True
                 Label:
                     id: cards
-                    text: "Cards remaining: 52"
+                    text: "Cards remaining = 52"
             BoxLayout:
                 orientation: 'horizontal'
                 padding: 5
@@ -117,26 +120,39 @@ Builder.load_string('''
                     padding: 10
                     spacing: 20
                     Button:
+                        background_color: (0.0, 0.0, 0.0, 0.75)
                         text: "Draw"
                         bold: True
                         on_press: root.draw()
                     Button:
+                        background_color: (0.0, 0.0, 0.0, 0.75)
                         text: "Solve"
                         bold: True
                         on_press: root.solve()
+                    Button:
+                        background_color: (0.0, 0.0, 0.0, 0.75)
+                        text: "Back to Menu"
+                        bold: True
+                        on_press:
+                            root.reboundall()
+                            root.manager.transition.direction = 'right'
+                            root.manager.current = 'Login'
                 BoxLayout:
                     orientation: 'vertical'
                     padding: 10
                     spacing: 20
                     Button:
+                        background_color: (0.0, 0.0, 0.0, 0.75)
                         text: "Return to Deck"
                         bold: True
                         on_press: root.rebound()
                     Button:
+                        background_color: (0.0, 0.0, 0.0, 0.75)
                         text: "Return All"
                         bold: True
                         on_press: root.reboundall()
                     Button:
+                        background_color: (0.0, 0.0, 0.0, 0.75)
                         text: "Exit"
                         bold: True
                         on_press: app.stop()
@@ -177,6 +193,7 @@ Builder.load_string('''
                     font_size: 35
                     bold: True
                 Label:
+                    font_size: 20
                     text: ""
                     id: solution
             BoxLayout:
@@ -188,6 +205,7 @@ Builder.load_string('''
                         font_size: 35
                         bold: True
                     Label:
+                        font_size: 20
                         text: ""
                         id: result
                 BoxLayout:
@@ -197,6 +215,7 @@ Builder.load_string('''
                         font_size: 35
                         bold: True
                     Label:
+                        font_size: 20
                         text: ""
                         id: score
 ''')
@@ -218,16 +237,16 @@ class Login(Screen):
 
 class Play(Screen):
     def on_enter(self):
-        self.ids.title.text = name[0]
+        self.ids.title.text = "Hello, " + name[0]
         print(self.ids.title.text)
 
     def draw(self):
         while (cards != []):
             del cards[0]
         if countDeck() == 0:
-            self.ids.solution.text = "Fail, no solution"
-            self.ids.score.text = "Empty deck"
-            self.ids.result.text = "No result"
+            self.ids.solution.text = "Empty Deck"
+            self.ids.score.text = "None"
+            self.ids.result.text = "None"
             self.ids.pic1.source = "../resource/blue_back.png"
             self.ids.pic2.source = "../resource/gray_back.png"
             self.ids.pic3.source = "../resource/red_back.png"
@@ -253,7 +272,7 @@ class Play(Screen):
 
     def solve(self):
         if len(cards) == 0:
-            self.ids.solution.text = "No solution, empty deck"
+            self.ids.solution.text = "Empty Deck"
             self.ids.result.text = "None"
             self.ids.score.text = "None"
         else:
