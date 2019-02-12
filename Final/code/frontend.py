@@ -131,11 +131,11 @@ Builder.load_string('''
                     Button:
                         text: "Return to Deck"
                         bold: True
-                        on_press: root.return()
+                        on_press: root.rebound()
                     Button:
                         text: "Return All"
                         bold: True
-                        on_press: root.rebound()
+                        on_press: root.reboundall()
                     Button:
                         text: "Exit"
                         bold: True
@@ -220,7 +220,10 @@ class Play(Screen):
     def on_enter(self):
         self.ids.title.text = name[0]
         print(self.ids.title.text)
-    def DaS(self):
+
+    def draw(self):
+        while (cards != []):
+            del cards[0]
         if countDeck() == 0:
             self.ids.solution.text = "Fail, no solution"
             self.ids.score.text = "Empty deck"
@@ -243,7 +246,17 @@ class Play(Screen):
             self.ids.pic2.source = picList[1]
             self.ids.pic3.source = picList[2]
             self.ids.pic4.source = picList[3]
+            self.ids.cards.text = "Cards remaining = " + str(len(deck))
+            self.ids.solution.text = ""
+            self.ids.score.text = ""
+            self.ids.result.text = ""
 
+    def solve(self):
+        if len(cards) == 0:
+            self.ids.solution.text = "No solution, empty deck"
+            self.ids.result.text = "None"
+            self.ids.score.text = "None"
+        else:
             # Mencari solusi
             mapNumbers(cards)
             print("Numbers:", end='')
@@ -255,13 +268,26 @@ class Play(Screen):
             self.ids.solution.text = solution
             self.ids.result.text = str(eval(solution))
             self.ids.score.text = str(score)
-            self.ids.cards.text = "Cards remaining = " + str(len(deck))
 
     def rebound(self):
+        while (cards != []):
+            deck.append(cards[0])
+            del cards[0]
+        self.ids.pic1.source = "../resource/blue_back.png"
+        self.ids.pic2.source = "../resource/gray_back.png"
+        self.ids.pic3.source = "../resource/red_back.png"
+        self.ids.pic4.source = "../resource/yellow_back.png"
+        self.ids.cards.text = "Cards remaining = " + str(len(deck))
+
+    def reboundall(self):
         while (deck != []):
             del deck[0]
         for i in range(52):
             deck.append(i)
+
+        while (cards != []):
+            del cards[0]
+
         self.ids.pic1.source = "../resource/blue_back.png"
         self.ids.pic2.source = "../resource/gray_back.png"
         self.ids.pic3.source = "../resource/red_back.png"
@@ -270,17 +296,16 @@ class Play(Screen):
         print("Remaining cards:", end='')
         print(countDeck())
 
-# DRAW and SOLVE
+# Fungsi-fungsi penolong
 def countDeck():
     return len(deck)
 
 def randomizer():
-    cards = []
     for i in range(0, 4):
         x = random.randint(0, (len(deck)-1))
         cards.append(deck[x])
         del deck[x]
-    return cards
+    print("Cards = ", cards)
 
 def mapNumbers(cards):
     for i in range(len(cards)):
