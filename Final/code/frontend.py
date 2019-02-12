@@ -278,6 +278,9 @@ class Play(Screen):
         self.ids.pic3.source = "../resource/red_back.png"
         self.ids.pic4.source = "../resource/yellow_back.png"
         self.ids.cards.text = "Cards remaining = " + str(len(deck))
+        self.ids.solution.text = ""
+        self.ids.score.text = ""
+        self.ids.result.text = ""
 
     def reboundall(self):
         while (deck != []):
@@ -293,6 +296,9 @@ class Play(Screen):
         self.ids.pic3.source = "../resource/red_back.png"
         self.ids.pic4.source = "../resource/yellow_back.png"
         self.ids.cards.text = "Cards remaining = " + str(len(deck))
+        self.ids.solution.text = ""
+        self.ids.score.text = ""
+        self.ids.result.text = ""
         print("Remaining cards:", end='')
         print(countDeck())
 
