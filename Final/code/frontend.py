@@ -20,6 +20,7 @@ from kivy.uix.button import Button
 from kivy.graphics import Color, Rectangle
 
 # Tampilan frontend
+# Screen login dan play
 Builder.load_string('''
 #:import hex kivy.utils.get_color_from_hex
 <Login>:
@@ -228,6 +229,7 @@ Builder.load_string('''
                         id: score
 ''')
 
+# Variabel global
 # List deck kartu
 deck = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51]
 
@@ -237,19 +239,25 @@ name = [""] * 2
 # Kartu yang ditampilkan
 cards = []
 
-#class Screen1(BoxLayout):
+# Screen 1 : Login
 class Login(Screen):
+    # Memasukkan teks dari textinput ke nama
     def login(self):
         name[0] = self.ids.tester.text
 
+# Screen 2 : Play
 class Play(Screen):
+    # Saat masuk ke screen Play
     def on_enter(self):
         self.ids.title.text = "Hello! " + name[0]
         print(self.ids.title.text)
 
+    # Saat button draw ditekan
     def draw(self):
+        # Mengosongkan list cards
         while (cards != []):
             del cards[0]
+        # Jika deck kosong
         if countDeck() == 0:
             self.ids.solution.text = "Empty Deck"
             self.ids.score.text = "None"
@@ -258,12 +266,15 @@ class Play(Screen):
             self.ids.pic2.source = "../resource/gray_back.png"
             self.ids.pic3.source = "../resource/red_back.png"
             self.ids.pic4.source = "../resource/yellow_back.png"
+        # JIka deck tidak kosong
         else:
+            # Melakukan random kartu
             randomizer()
             print("Cards:", end='')
             print(cards)
             print("Remaining Cards:", end='')
             print(countDeck())
+
             # Gambarkan pada kartu
             picList = drawCards(cards)
             print("Pictures:", end='')
@@ -277,11 +288,14 @@ class Play(Screen):
             self.ids.score.text = ""
             self.ids.result.text = ""
 
+    # Ketika button solve ditekan
     def solve(self):
+        # Jika tidak terdapat kartu yang didraw
         if len(cards) == 0:
             self.ids.solution.text = "Empty Deck"
             self.ids.result.text = "None"
             self.ids.score.text = "None"
+        # Jika terdapat kartu yang didraw
         else:
             # Mencari solusi
             mapNumbers(cards)
@@ -291,14 +305,20 @@ class Play(Screen):
             print("Solution:", solution)
             print()
             score = backend.score24(solution)
+
+            # Menampilkan solusi, hasil operasi, dan skor
             self.ids.solution.text = solution
             self.ids.result.text = str(eval(solution))
             self.ids.score.text = str(score)
 
+    # Ketika tombol return to deck ditekan
     def rebound(self):
+        # Mengosongkan kartu di luar deck dan menambahkannya ke deck
         while (cards != []):
             deck.append(cards[0])
             del cards[0]
+
+        # Tampilkan ke layar
         self.ids.pic1.source = "../resource/blue_back.png"
         self.ids.pic2.source = "../resource/gray_back.png"
         self.ids.pic3.source = "../resource/red_back.png"
@@ -309,14 +329,17 @@ class Play(Screen):
         self.ids.result.text = ""
 
     def reboundall(self):
+        # Mengosongkan deck, lalu isi full
         while (deck != []):
             del deck[0]
         for i in range(52):
             deck.append(i)
 
+        # Mengosongkan kartu di luar deck
         while (cards != []):
             del cards[0]
 
+        # Tampilkan ke layar
         self.ids.pic1.source = "../resource/blue_back.png"
         self.ids.pic2.source = "../resource/gray_back.png"
         self.ids.pic3.source = "../resource/red_back.png"
@@ -329,9 +352,12 @@ class Play(Screen):
         print(countDeck())
 
 # Fungsi-fungsi penolong
+
+# Hitung jumlah deck
 def countDeck():
     return len(deck)
 
+# Random 4 kartu dari deck ke luar deck
 def randomizer():
     for i in range(0, 4):
         x = random.randint(0, (len(deck)-1))
@@ -339,12 +365,14 @@ def randomizer():
         del deck[x]
     print("Cards = ", cards)
 
+# Memetakan angka agar hasilnya dari 1 - 13
 def mapNumbers(cards):
     for i in range(len(cards)):
         cards[i] = int(cards[i]) % 13
         if (cards[i]) == 0:
             cards[i] = 13
 
+# Menggambarkan angka ke dalam 4 kartu yang ditampilkan
 def drawCards(cards):
     picList = []
     for i in range(len(cards)):
@@ -353,6 +381,7 @@ def drawCards(cards):
         picList.append(mapping(num, sign))
     return picList
 
+# Membantu pengammbaran kartu dengan pemetaan
 def mapping(num, sign):
     target = "../resource/"
     # Nomor kartu
@@ -387,6 +416,7 @@ class Main(App):
     def build(self):
         return sm #Play()
 
+# Jalankan kivy
 if __name__ == '__main__':
     Window.fullscreen = 'auto'
     Main().run()
