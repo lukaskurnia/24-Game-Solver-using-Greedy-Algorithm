@@ -1,6 +1,8 @@
 import backend
 import random
 
+from decimal import Decimal, ROUND_HALF_EVEN
+
 from kivy.app import App
 from kivy.lang import Builder
 from kivy.core.window import Window
@@ -308,8 +310,8 @@ class Play(Screen):
 
             # Menampilkan solusi, hasil operasi, dan skor
             self.ids.solution.text = solution
-            self.ids.result.text = str(eval(solution))
-            self.ids.score.text = str(score)
+            self.ids.result.text = str(round(eval(solution), 3))
+            self.ids.score.text = str(round(score, 3))
 
     # Ketika tombol return to deck ditekan
     def rebound(self):
